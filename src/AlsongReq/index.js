@@ -57,10 +57,11 @@ function getResembleLyricList(artist, title, option) {
     if (!option) {
         option = {};
     }
+    const urls = ['https://lyric.altools.com','/v1/search','/v1/info'];
     let RSA = new (RSAForHtml());
     api.enc = RSA.encrypt();
     api.req = axios.create({
-        baseURL: 'https://lyric.altools.com',
+        baseURL: urls[0],
         headers: {
             // 'Accept-Charset': 'utf-8',
             // 'Connection': 'close',
@@ -81,7 +82,7 @@ function getResembleLyricList(artist, title, option) {
     params.append('encData', api.enc);
     api.info.SearchTitle = title;
     api.info.SearchArtist = artist;
-    const data = api.req.post('/v1/search', params);
+    const data = api.req.post(urls[1], params);
     data.then(e => findLyrics(e, option)).catch(e=>displayInfo(["Alsong: 서버 응답 없음: ",e,'Stack'+e.stack]))
 };
 
@@ -91,7 +92,7 @@ function getResembleLyricList(artist, title, option) {
 //     params.append('encData', api.enc);
 
 //     try {
-//         const { data } = await api.req.post('/v1/info', params);
+//         const { data } = await api.req.post(urls[2], params);
 //         return data;
 //     } catch(err) {
 //         if (err.response && err.response.status === 404) {
