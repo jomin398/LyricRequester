@@ -1,0 +1,17 @@
+body {
+  font-size: 15pt;
+}
+
+.AA_Text {
+  border: 1px solid #ddd;
+  padding: 20px;
+  font-family: 'Saitamaar', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: 0;
+  line-height: 18px;
+  background: #fff;
+  overflow: auto;
+  white-space: nowrap;
+}

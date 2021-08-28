@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML</title>
+  <!-- HTML -->
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+  <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+  <script src="http://www-cs-students.stanford.edu/~tjw/jsbn/jsbn.js"></script>
+  <script src="http://www-cs-students.stanford.edu/~tjw/jsbn/prng4.js"></script>
+  <script src="http://www-cs-students.stanford.edu/~tjw/jsbn/rng.js"></script>
+  <script src="http://www-cs-students.stanford.edu/~tjw/jsbn/rsa.js"></script>
+  <script src="./RSAForHtml/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./AlsongReq/index.js"></script>
+</head>
+
+<body>
+  <p>Nothing to see here...</p>
+  <!-- Project -->
+  <script type="module">
+     let title = 'Tell your world';
+  let artist= '初音ミク';
+  let option = {
+    includeAlbumText:'kz'
+  }
+    getResembleLyricList(artist,title);
+  </script>
+</body>
+
+</html>
