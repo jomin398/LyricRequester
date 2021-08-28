@@ -66,7 +66,8 @@ function getResembleLyricList(artist, title, option) {
             // 'Accept-Charset': 'utf-8',
             // 'Connection': 'close',
             'Access-Control-Allow-Origin': "*",
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Credentials': true
         },
         responseType: 'json'
     });
