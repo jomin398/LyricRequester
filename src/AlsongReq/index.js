@@ -65,6 +65,7 @@ function getResembleLyricList(artist, title, option) {
         headers: {
             // 'Accept-Charset': 'utf-8',
             // 'Connection': 'close',
+            'Access-Control-Allow-Origin': "*",
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         responseType: 'json'
