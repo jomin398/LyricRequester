@@ -2,18 +2,18 @@ const api = {
     enc: null,
     req: null,
     db: null,
-    info:{}
+    info: {}
 }
-function displayInfo(str){
+function displayInfo(str) {
     let ele = document.getElementById('lrcRaw');
-    if(!ele){
+    if (!ele) {
         ele = document.createElement('div');
         ele.id = 'lrcRaw';
         ele.innerText = 'Init Lrc...';
         document.body.appendChild(ele)
-    }else{
-        if(str){
-            ele.innerText = Array.isArray(str)?str.join('\n'):typeof str == 'object'?JSON.stringify(str):str;
+    } else {
+        if (str) {
+            ele.innerText = Array.isArray(str) ? str.join('\n') : typeof str == 'object' ? JSON.stringify(str) : str;
         }
     }
 }
@@ -35,8 +35,8 @@ function pickupGreatestDuples() {
     obj = countDuplicate(arr);
     nrr = Object.values(obj);
     return {
-        one:arr.indexOf(Object.keys(obj)[nrr.indexOf(nrr.reduce((acc, item) => acc = acc > item ? acc : item, 0))]),
-        list:obj
+        one: arr.indexOf(Object.keys(obj)[nrr.indexOf(nrr.reduce((acc, item) => acc = acc > item ? acc : item, 0))]),
+        list: obj
     };
 }
 function findLyrics(db, option) {
@@ -45,11 +45,11 @@ function findLyrics(db, option) {
     api.db = api.db.filter(d => d.playtime != -1);
     if (option.includeAlbumText) {
         api.db = api.db.filter(d => d.album.indexOf(option.includeAlbumText) != -1)[0];
-    }else{
-        api.info.ListPickup= pickupGreatestDuples().list;
-        api.db =api.db[pickupGreatestDuples().one];
+    } else {
+        api.info.ListPickup = pickupGreatestDuples().list;
+        api.db = api.db[pickupGreatestDuples().one];
     }
-    displayInfo(["Alsong: "+(option.includeAlbumText?"입력된 앨범이름으로":"가장 많은 앨범으로")+" 필터링 완료.",JSON.stringify(api.db),null,'options : '+JSON.stringify(option),JSON.stringify(api.info)]);
+    displayInfo(["Alsong: " + (option.includeAlbumText ? "입력된 앨범이름으로" : "가장 많은 앨범으로") + " 필터링 완료.", JSON.stringify(api.db), null, 'options : ' + JSON.stringify(option), JSON.stringify(api.info)]);
     console.log(api.db);
 }
 function getResembleLyricList(artist, title, option) {
@@ -57,7 +57,7 @@ function getResembleLyricList(artist, title, option) {
     if (!option) {
         option = {};
     }
-    const urls = ['https://lyric.altools.com','/v1/search','/v1/info'];
+    const urls = ['https://lyric.altools.com', '/v1/search', '/v1/info'];
     let RSA = new (RSAForHtml());
     api.enc = RSA.encrypt();
     api.req = axios.create({
@@ -83,7 +83,7 @@ function getResembleLyricList(artist, title, option) {
     api.info.SearchTitle = title;
     api.info.SearchArtist = artist;
     const data = api.req.post(urls[1], params);
-    data.then(e => findLyrics(e, option)).catch(e=>displayInfo(["Alsong: 서버 응답 없음: ",e,'Stack'+e.stack]))
+    data.then(e => findLyrics(e, option)).catch(e => displayInfo(["Alsong: 서버 응답 없음: ", e, 'Stack' + e.stack]))
 };
 
 // function getLyricById(id, option) {

@@ -9,11 +9,11 @@
   <!-- HTML -->
   <!-- Custom Styles -->
   <link rel="stylesheet" href="style.css">
-  <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-  <script src="http://www-cs-students.stanford.edu/~tjw/jsbn/jsbn.js"></script>
-  <script src="http://www-cs-students.stanford.edu/~tjw/jsbn/prng4.js"></script>
-  <script src="http://www-cs-students.stanford.edu/~tjw/jsbn/rng.js"></script>
-  <script src="http://www-cs-students.stanford.edu/~tjw/jsbn/rsa.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./src/jsbn/jsbn.js"></script>
+  <script src="./src/jsbn/prng4.js"></script>
+  <script src="./src/jsbn/rng.js"></script>
+  <script src="./src/jsbn/rsa.js"></script>
   <script src="./src/RSAForHtml/index.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="./src/AlsongReq/index.js"></script>
@@ -23,12 +23,12 @@
   <p>Nothing to see here...</p>
   <!-- Project -->
   <script type="module">
-     let title = 'Tell your world';
-  let artist= '初音ミク';
-  let option = {
-    includeAlbumText:'kz'
-  }
-    getResembleLyricList(artist,title);
+    let title = 'Tell your world';
+    let artist = '初音ミク';
+    let option = {
+      includeAlbumText: 'kz'
+    }
+    getResembleLyricList(artist, title);
   </script>
 </body>
 
