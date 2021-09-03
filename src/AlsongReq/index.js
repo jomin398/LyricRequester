@@ -114,6 +114,7 @@ function findLyrics(db, option) {
 function addXhrHeaders(xhr) {
     xhr.setRequestHeader("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7");
     xhr.setRequestHeader("access-control-allow-credentials", "false");
+    xhr.withCredentials = false;
     // xhr.setRequestHeader("access-control-allow-origin", "*");
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.setRequestHeader("cache-control", "no-cache");
@@ -145,7 +146,7 @@ function getResembleLyricList(artist, title, option) {
 
     xhr.open('POST', urls[0] + urls[1], true);
     //addHeaders....
-    addXhrHeaders(xhr);
+    //addXhrHeaders(xhr);
     xhr.onload = () => {
         if (xhr.status != 200) { // analyze HTTP status of the response
             console.log(xhr.status + " Error ", xhr.statusText); // e.g. 404: Not Found
