@@ -114,7 +114,7 @@ function findLyrics(db, option) {
 function addXhrHeaders(xhr) {
     xhr.setRequestHeader("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7");
     // xhr.setRequestHeader("access-control-allow-credentials", "true");
-    xhr.setRequestHeader("access-control-allow-origin", "https://lyric.altools.com");
+    xhr.setRequestHeader("access-control-allow-origin", "*");
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.setRequestHeader("cache-control", "no-cache");
     // xhr.setRequestHeader("referrerPolicy", "strict-origin-when-cross-origin");
