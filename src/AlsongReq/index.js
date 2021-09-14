@@ -113,15 +113,6 @@ function findLyrics(db, option) {
   getLyric(option)
 }
 
-function addXhrHeaders(xhr) {
-  xhr.setRequestHeader("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7");
-  xhr.setRequestHeader("access-control-allow-credentials", "true");
-  xhr.setRequestHeader("access-control-allow-origin", "https://lyric.altools.com");
-  xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-  xhr.setRequestHeader("cache-control", "no-cache");
-  xhr.setRequestHeader("referrerPolicy", "strict-origin-when-cross-origin");
-}
-
 function getResembleLyricList(artist, title, option) {
   displayInfo('Alsong: RSA 키 생성');
   if (!option) {
@@ -145,7 +136,6 @@ function getResembleLyricList(artist, title, option) {
   api.info = {};
   api.info.SearchTitle = title;
   api.info.SearchArtist = artist;
-
   doCORSRequest({
     method: 'POST',
     url: urls[0] + urls[1],
