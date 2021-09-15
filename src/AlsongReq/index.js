@@ -64,7 +64,7 @@ function displayJSON(obj, option) {
     document.body.appendChild(jsonWrapper);
   }
   if (obj) {
-    $(function() {
+    $(function () {
       $('#json-rendrer').jsonViewer(obj, option);
     });
   }
@@ -118,7 +118,7 @@ function getResembleLyricList(artist, title, option) {
   if (!option) {
     option = {};
   }
-  let RSA = new(RSAForHtml());
+  let RSA = new (RSAForHtml());
   api.enc = RSA.encrypt();
 
   let xhr = new XMLHttpRequest();
@@ -139,7 +139,8 @@ function getResembleLyricList(artist, title, option) {
   doCORSRequest({
     method: 'POST',
     url: urls[0] + urls[1],
-    data: params
+    data: params,
+    progress: true
   }, (res) => {
     findLyrics(res.responseText, option)
     delete res.responseText;
@@ -147,21 +148,34 @@ function getResembleLyricList(artist, title, option) {
   });
 };
 
-function parseLyric(lyric) {
+function parseLyric(lyric, method) {
   const lyrics = {};
-  const lyricLines = {};
-  lyric.split('<br>').forEach(v => {
-    const match = v.match(/^\[(\d+):(\d\d).(\d\d)\](.*)$/);
-    if (!match) return;
+  if (method) {
+    lyric.split('<br>').forEach(v => {
+      const match = v.match(/^\[(\d+):(\d\d).(\d\d)\](.*)$/);
+      if (!match) return;
 
-    const timestamp = 10 * (parseInt(match[1]) * 60 * 100 + parseInt(match[2]) * 100 + parseInt(match[3]));
-    if (!lyrics[timestamp]) lyrics[timestamp] = [];
+      const timestamp = 10 * (parseInt(match[1]) * 60 * 100 + parseInt(match[2]) * 100 + parseInt(match[3]));
+      if (!lyrics[timestamp]) lyrics[timestamp] = [];
 
-    lyrics[timestamp].push(match[4]);
+      lyrics[timestamp].push(match[4]);
 
-  });
-  if (lyrics[0].length > 3) {
-    lyrics[0] = ["", "", ""];
+    });
+    if (lyrics[0].length > 3) {
+      lyrics[0] = ["", "", ""];
+    }
+  } else {
+    lyric.split('<br>').forEach(v => {
+      const match = v.match(/^\[(\d+):(\d\d).(\d\d)\](.*)$/);
+      if (!match) return;
+      const timestamp = v.match(/^\[\d+:\d\d\.\d\d\]/)[0];
+      if (!lyrics[timestamp]) lyrics[timestamp] = [];
+
+      lyrics[timestamp].push(match[4]);
+    })
+    if (lyrics["[00:00.00]"].length > 4) {
+      lyrics["[00:00.00]"] = ["", "", ""];
+    }
   }
   return lyrics;
 }
