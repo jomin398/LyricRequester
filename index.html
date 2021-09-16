@@ -21,18 +21,56 @@
   <script src="./src/RSAForHtml/index.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="./src/AlsongReq/index.js"></script>
+  <style>
+    form.form-example {
+      display: table;
+    }
+
+    div.form-example {
+      display: table-row;
+    }
+
+    label,
+    input {
+      display: table-cell;
+      margin-bottom: 10px;
+    }
+
+    label {
+      padding-right: 10px;
+    }
+  </style>
 </head>
 
 <body>
   <p>Nothing to see here...</p>
   <!-- Project -->
-  <script type="module">
-    let title = 'Tell your world';
-    let artist = '初音ミク';
-    let option = {
-      includeAlbumText: 'kz'
+  <form action="javascript:formSend();" method="get" class="form-example">
+    <div class="form-example">
+      <label for="title">song title: </label>
+      <input type="text" name="title" id="title" required value="Tell your world">
+    </div>
+    <div class="form-example">
+      <label for="artist">song artist: </label>
+      <input type="text" name="artist" id="artist" required value="初音ミク">
+    </div>
+    <div class="form-example">
+      <label for="albumText">includeAlbumText: </label>
+      <input type="text" name="albumText" id="albumText">
+    </div>
+    <div class="form-example">
+      <input type="submit" value="Enter">
+    </div>
+  </form>
+  <script>
+    function formSend() {
+      let t = document.getElementById("title").value;
+      let a = document.getElementById("artist").value;
+      let at = document.getElementById("albumText").value;
+
+      getResembleLyricList(a, t, at ? { includeAlbumText: at } : undefined);
     }
-    getResembleLyricList(artist, title);
+    //getResembleLyricList(artist, title);
   </script>
 </body>
 

@@ -31,7 +31,8 @@ function doCORSRequest(options, printResult) {
         url: options.url,
         status: x.status,
         statusText: x.statusText,
-        responseText: x.responseText || ''
+        responseText: x.responseText || '',
+        response:x.response
       }
     );
   };

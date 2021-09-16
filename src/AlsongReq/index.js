@@ -121,7 +121,6 @@ function getResembleLyricList(artist, title, option) {
   let RSA = new (RSAForHtml());
   api.enc = RSA.encrypt();
 
-  let xhr = new XMLHttpRequest();
   const page = option.page || 0;
   const playtime = option.playtime || 0;
   const params = new URLSearchParams();
@@ -180,22 +179,23 @@ function parseLyric(lyric, method) {
   return lyrics;
 }
 
-function getLyric(option) {
+function getLyric() {
   const params = new URLSearchParams();
   params.append('info_id', api.db.lyric_id);
   params.append('encData', api.enc);
-
-  let xhr = new XMLHttpRequest();
-  xhr.open('POST', urls[0] + urls[2], true);
-  xhr.onload = () => {
-    if (xhr.status != 200) { // analyze HTTP status of the response
+  doCORSRequest({
+    method: 'POST',
+    url: urls[0] + urls[2],
+    data: params,
+    progress: true
+  }, (res) => {
+    if (res.status != 200) { // analyze HTTP status of the response
       displayInfo("Alsong: 가사 요청 실페");
-      console.log(xhr.status + " Error ", xhr.statusText); // e.g. 404: Not Found
+      console.log(res.status + " Error ", res.statusText); // e.g. 404: Not Found
     } else {
-      let res = xhr.responseText;
-      displayInfo("Alsong: 가사 요청 성공. (" + xhr.response.length + " bytes)");
+      displayInfo("Alsong: 가사 요청 성공. (" + res.response.length + " bytes)");
       api.finalData = {};
-      api.finalData = JSON.parse(res);
+      api.finalData = JSON.parse(res.statusText);
       api.lyric = {};
       api.lyric = new parseLyric(api.finalData.lyric);
       let json = Object.assign({}, api);
@@ -203,10 +203,5 @@ function getLyric(option) {
 
       displayJSON(json, { collapsed: true });
     }
-  }
-  xhr.onerror = () => {
-    let e = new NetWorkError('ServerNotResponce');
-    displayInfo(["Alsong:", e, "at XMLHttpRequest"]);
-  }
-  xhr.send(params);
+  });
 }
