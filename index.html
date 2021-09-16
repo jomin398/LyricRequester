@@ -69,6 +69,7 @@
       let at = document.getElementById("albumText").value;
 
       getResembleLyricList(a, t, at ? { includeAlbumText: at } : undefined);
+      document.querySelector('.form-example').remove();
     }
     //getResembleLyricList(artist, title);
   </script>

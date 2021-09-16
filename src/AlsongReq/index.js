@@ -195,13 +195,15 @@ function getLyric() {
     } else {
       displayInfo("Alsong: 가사 요청 성공. (" + res.response.length + " bytes)");
       api.finalData = {};
-      api.finalData = JSON.parse(res.statusText);
+      api.finalData = JSON.parse(res.responseText);
       api.lyric = {};
       api.lyric = new parseLyric(api.finalData.lyric);
       let json = Object.assign({}, api);
       delete json.enc;
 
       displayJSON(json, { collapsed: true });
+      delete res.responseText;
+      console.log(res);
     }
   });
 }
