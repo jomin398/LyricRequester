@@ -149,6 +149,7 @@ function getResembleLyricList(artist, title, option) {
 
 function parseLyric(lyric, method) {
   const lyrics = {};
+  
   if (method) {
     lyric.split('<br>').forEach(v => {
       const match = v.match(/^\[(\d+):(\d\d).(\d\d)\](.*)$/);
@@ -160,8 +161,11 @@ function parseLyric(lyric, method) {
       lyrics[timestamp].push(match[4]);
 
     });
-    if (lyrics[0].length > 3) {
-      lyrics[0] = ["", "", ""];
+    let lyricFirst = lyrics[0];
+    if (lyricFirst) {
+      if (lyrics[0].length > 3) {
+        lyrics[0] = ["", "", ""];
+      }
     }
   } else {
     lyric.split('<br>').forEach(v => {
@@ -172,8 +176,11 @@ function parseLyric(lyric, method) {
 
       lyrics[timestamp].push(match[4]);
     })
-    if (lyrics["[00:00.00]"].length > 4) {
-      lyrics["[00:00.00]"] = ["", "", ""];
+    lyricFirst = lyrics["[00:00.00]"];
+    if (lyricFirst) {
+      
+        lyrics["[00:00.00]"] = ["", "", ""];
+      
     }
   }
   return lyrics;
@@ -194,16 +201,23 @@ function getLyric() {
       console.log(res.status + " Error ", res.statusText); // e.g. 404: Not Found
     } else {
       displayInfo("Alsong: 가사 요청 성공. (" + res.response.length + " bytes)");
-      api.finalData = {};
-      api.finalData = JSON.parse(res.responseText);
-      api.lyric = {};
-      api.lyric = new parseLyric(api.finalData.lyric);
-      let json = Object.assign({}, api);
-      delete json.enc;
-
-      displayJSON(json, { collapsed: true });
-      delete res.responseText;
-      console.log(res);
+      lyricsDisplay(res);
     }
   });
+}
+function lyricsDisplay(res) {
+  api.finalData = {};
+  api.finalData = JSON.parse(res.responseText);
+  api.lyric = [];
+  api.lyric.push(api.finalData.lyric.replaceAll('[00:00.00]<br>','').replaceAll('<br>', '\n'));
+  api.lyric.push(new parseLyric(api.finalData.lyric));
+  api.lyric.push(new parseLyric(api.finalData.lyric, true));
+  let json = Object.assign({}, api);
+  delete json.enc;
+  displayJSON(json, { collapsed: true });
+  //display
+  lyricsWrapper = document.createElement('div');
+  lyricsWrapper.id = lyricsWrapper;
+  lyricsWrapper.innerText = api.lyric[0];
+  document.getElementById('jsonWrapper').insertAdjacentElement('afterend', lyricsWrapper)
 }
